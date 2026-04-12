@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  db:
+    image: mariadb:10.11
+    container_name: mariadb_contaminacion
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: contaminaelroot2026
+      MYSQL_DATABASE: contaminantes
+      MYSQL_USER: yak
+      MYSQL_PASSWORD: proyectosdel26
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  api:
+    build: 
+      context: ./src/back
+    container_name: flask_api
+    restart: always
+    ports:
+      - "5001:5000"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_USER=yak
+      - DB_PASSWORD=proyectosdel26
+      - DB_NAME=contaminantes
+
+  web:
+    build:
+      context: ./src/front
+    container_name: nginx_frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+
+volumes:
+  db_data:
