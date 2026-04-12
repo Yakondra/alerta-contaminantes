@@ -12,6 +12,6 @@ Para inicializar el proyecto, necesitas ejecutar el archivo Compose.yml en la ra
 
 `docker compose up -d`
 
-## CONFIGURACIÓN
+## CONFIGURACIÓN
 
 Para empezar a registrar valores, necesitas primero crear las tablas, entrando al contenedor de mariaDB, ejecutando el cliente SQL interno, y ejecutando las sentencias SQL del archivo db.sql en orden. Además, en el archivo se han incorporado 1 empresa y cliente de ejemplo para poder testar.
