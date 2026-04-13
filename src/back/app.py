@@ -11,16 +11,16 @@ CORS(app)
 print("Cargando modelos y diccionarios...")
 try:
     with open('modelo/diccionarios/N_MUNICIPIO_correspondencia.pkl', 'rb') as f:
-        dicc_municipality = pickle.load(f)
+        dicc_municipio = pickle.load(f)
     with open('modelo/diccionarios/MAGNITUD_correspondencia.pkl', 'rb') as f:
         dicc_magnitudes = pickle.load(f)
     with open('modelo/diccionarios/TIPO_AREA_correspondencia.pkl', 'rb') as f:
         dicc_area = pickle.load(f)
     with open('modelo/diccionarios/TIPO_ESTACION_correspondencia.pkl', 'rb') as f:
-        dicc_station = pickle.load(f)
+        dicc_estacion = pickle.load(f)
     
-    with open('modelo/RandomForestMadrid_23.pk', 'rb') as f:
-        model = pickle.load(f)
+    with open('modelo/RandomForestMadrid.pk', 'rb') as f:
+        modelo = pickle.load(f)
         
     print("Modelos y diccionarios cargados correctamente.")
 except Exception as e:
@@ -87,13 +87,13 @@ def predict():
 
         row = [
             valor,
-            dicc_municipality[municipio],
+            dicc_municipio[municipio],
             dicc_magnitudes[contaminante],
             dicc_area[tipo_area],
-            dicc_station[tipo_estacion]
+            dicc_estacion[tipo_estacion]
         ]
         
-        y_pred = model.predict([row])
+        y_pred = modelo.predict([row])
         pred_value = y_pred[0] 
         
         if pred_value == 0:
