@@ -18,7 +18,7 @@ services:
   api:
     build: 
       context: ./src/back
-    container_name: flask_api
+    container_name: api
     restart: always
     ports:
       - "5001:5000"
@@ -33,7 +33,7 @@ services:
   web:
     build:
       context: ./src/front
-    container_name: nginx_frontend
+    container_name: frontend
     restart: always
     ports:
       - "80:80"
