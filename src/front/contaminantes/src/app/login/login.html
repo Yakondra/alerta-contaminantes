@@ -1,0 +1,56 @@
+<div class="vh-100 d-flex align-items-center justify-content-center bg-light p-0">
+  <div class="row w-100 g-0 h-100 shadow-lg overflow-hidden">
+    
+    <div class="col-lg-6 d-none d-lg-flex flex-column justify-content-between text-white p-5 bg-primary bg-gradient shadow-inset">
+      
+      <div class="text-center mt-5 mb-5 flex-grow-1 d-flex flex-column align-items-center justify-content-center">
+        <img src="logo.png" alt="Logo de Alerta Contaminantes" class="img-fluid mb-4 rounded-circle bg-white p-4 shadow-lg" style="height: 250px; width: 250px; object-fit: contain;">
+        
+        <h1 class="display-5 fw-bold mb-1 text-white">Alerta Contaminantes</h1>
+        <p class="fs-4 text-white-50">Mide el Riesgo Ambiental</p>
+      </div>
+
+      <div class="bg-dark bg-opacity-25 p-4 rounded-4 text-center mb-5 mx-4">
+        <h5 class="fw-bold mb-2 text-white">Respira Tranquilo</h5>
+        <p class="mb-0 text-white opacity-75">
+          Monitorización avanzada de la calidad del aire
+        </p>
+      </div>
+      
+      <div class="small text-white-50 text-center mb-3">
+        &copy; 2026 Alerta Contaminantes
+      </div>
+    </div>
+
+    <div class="col-lg-6 d-flex align-items-center justify-content-center bg-white p-5">
+      <div class="w-100" style="max-width: 400px;">
+
+        <div class="mb-5 text-center">
+          <h2 class="fw-bold text-dark">Bienvenido de nuevo</h2>
+          <p class="text-muted small">Introduce tus datos para acceder.</p>
+        </div>
+
+        <form (ngSubmit)="hacerLogin()">
+          <div class="form-floating mb-3 border-bottom">
+            <input type="text" class="form-control border-0 bg-transparent shadow-none" id="u" name="u" [(ngModel)]="idUsuario" placeholder="User">
+            <label for="u" class="text-muted">ID de Usuario</label>
+          </div>
+
+          <div class="form-floating mb-4 border-bottom">
+            <input type="password" class="form-control border-0 bg-transparent shadow-none" id="p" name="p" [(ngModel)]="password" placeholder="Pass">
+            <label for="p" class="text-muted">Contraseña</label>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill shadow-sm fw-bold py-3">
+            LOGIN
+          </button>
+        </form>
+
+        <div *ngIf="errorMessage" class="alert alert-danger mt-4 small text-center border-0 py-2 rounded-3">
+          {{ errorMessage }}
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,9 +1,15 @@
-FROM nginx:alpine
+FROM node:20-alpine
 
-WORKDIR /usr/share/nginx/html
+WORKDIR /app
 
-RUN rm -rf ./*
+RUN npm install -g @angular/cli
 
-COPY . .
+COPY contaminantes/package*.json ./
+RUN npm install
+
+
+COPY contaminantes/ .
 
 EXPOSE 80
+
+CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "80"]

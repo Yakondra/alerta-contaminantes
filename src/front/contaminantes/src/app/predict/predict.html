@@ -1,0 +1,111 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm mb-5 py-3">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center fw-bold fs-4" href="#">
+      <img src="logo.png" alt="Logo" width="40" height="40" class="me-3 bg-white rounded-circle p-1 shadow-sm">
+      Alerta Contaminantes
+    </a>
+    <div class="d-flex align-items-center">
+      <div class="text-white-50 me-3 d-none d-md-block">
+        Usuario: <strong class="text-white">{{ idUsuario }}</strong>
+      </div>
+      <button class="btn btn-light btn-sm rounded-pill px-4 fw-bold text-primary shadow-sm" (click)="cerrarSesion()">
+        SALIR
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-12 col-md-10 col-lg-7">
+      
+      <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+        
+        <div class="card-header bg-primary bg-gradient text-white text-center py-4">
+          <h3 class="mb-0 fw-bold">Predicción de Calidad del Aire</h3>
+          <p class="small opacity-75 mb-0">Datos sincronizados directamente con los modelos de predicción</p>
+        </div>
+
+        <div class="card-body p-4 p-md-5 bg-white">
+          
+          <div *ngIf="cargandoOpciones" class="text-center py-4">
+            <div class="spinner-border text-primary mb-2" role="status"></div>
+            <p class="text-muted small">Cargando diccionarios del modelo...</p>
+          </div>
+
+          <form *ngIf="!cargandoOpciones" (ngSubmit)="hacerPrediccion()">
+            
+            <div class="row g-4 mb-4">
+              <div class="col-md-6">
+                <label class="form-label fw-bold text-secondary small text-uppercase">Fecha de Medición</label>
+                <input type="date" class="form-control form-control-lg rounded-3 bg-light border-0" name="fecha" [(ngModel)]="fecha">
+              </div>
+              
+              <div class="col-md-6">
+                <label class="form-label fw-bold text-secondary small text-uppercase">Valor (µg/m3)</label>
+                <input type="number" step="0.01" min="0.04" max="800" class="form-control form-control-lg rounded-3 bg-light border-0" name="valor" [(ngModel)]="valor_contaminante">
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-bold text-secondary small text-uppercase">Seleccione el Municipio</label>
+              <select class="form-select form-select-lg rounded-3 bg-light border-0 shadow-none" name="municipio" [(ngModel)]="municipio">
+                <option *ngFor="let m of listaMunicipios" [value]="m">{{m}}</option>
+              </select>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-bold text-secondary small text-uppercase">Seleccione el Contaminante</label>
+              <select class="form-select form-select-lg rounded-3 bg-light border-0 shadow-none" name="contaminante" [(ngModel)]="contaminante">
+                <option *ngFor="let c of listaContaminantes" [value]="c">{{c}}</option>
+              </select>
+            </div>
+
+            <div class="row g-4 mb-5">
+              <div class="col-md-6">
+                <label class="form-label fw-bold text-secondary small text-uppercase">Tipo de Área</label>
+                <select class="form-select form-select-lg rounded-3 bg-light border-0 shadow-none" name="area" [(ngModel)]="tipo_area">
+                  <option *ngFor="let a of listaAreas" [value]="a">{{a}}</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold text-secondary small text-uppercase">Tipo de Estación</label>
+                <select class="form-select form-select-lg rounded-3 bg-light border-0 shadow-none" name="estacion" [(ngModel)]="tipo_estacion">
+                  <option *ngFor="let e of listaEstaciones" [value]="e">{{e}}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary btn-lg rounded-pill fw-bold py-3 shadow transition-all mb-2">
+                REGISTRAR Y PREDECIR
+              </button>
+            </div>
+          </form>
+
+          <div *ngIf="resultadoPrediccion" class="mt-5 pt-4 border-top">
+            <div class="text-center p-4 rounded-4 bg-light shadow-sm">
+              <h6 class="text-secondary text-uppercase fw-bold mb-3 small">Peligrosidad Detectada</h6>
+              
+              <div class="display-4 fw-bolder mb-2">
+                <span *ngIf="resultadoPrediccion === 'BAJO'" class="text-success animate__animated animate__pulse"> BAJO </span>
+                <span *ngIf="resultadoPrediccion === 'NORMAL'" class="text-warning animate__animated animate__pulse"> NORMAL </span>
+                <span *ngIf="resultadoPrediccion === 'ALTO'" class="text-danger animate__animated animate__pulse"> ALTO </span>
+              </div>
+              
+              <p class="text-success fw-bold small mt-3 mb-0">
+                <i class="bi bi-database-fill-check me-2"></i> {{ mensajeExito }}
+              </p>
+            </div>
+          </div>
+
+          <div *ngIf="errorMessage" class="alert alert-danger mt-4 rounded-3 border-0 shadow-sm text-center py-3">
+             <i class="bi bi-exclamation-triangle-fill me-2"></i> Ha habido un error. Revisa tus datos. 
+          </div>
+
+        </div>
+      </div>
+      <p class="text-center text-muted mt-4 small opacity-50">&copy; 2026 Alerta Contaminantes</p>
+    </div>
+  </div>
+</div>
