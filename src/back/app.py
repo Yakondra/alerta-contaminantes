@@ -69,6 +69,19 @@ def login():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route('/api/opciones', methods=['GET'])
+def obtener_opciones():
+    try:
+        return jsonify({
+            "success": True,
+            "municipios": sorted(list(dicc_municipio.keys())),
+            "contaminantes": sorted(list(dicc_magnitudes.keys())),
+            "areas": sorted(list(dicc_area.keys())),
+            "estaciones": sorted(list(dicc_estacion.keys()))
+        })
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+
 @app.route('/api/predict', methods=['POST'])
 def predict():
     datos = request.json
