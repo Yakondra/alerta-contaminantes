@@ -38,5 +38,21 @@ services:
     depends_on:
       - api
 
+  historico:
+    image: grafana/grafana-oss
+    container_name: historico
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ALLOW_EMBEDDING=true
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - db
+
 volumes:
   db_data:
+  grafana_data:
