@@ -93,7 +93,6 @@ def predict():
         tipo_area = datos.get('tipo_area')
         tipo_estacion = datos.get('tipo_estacion')
         valor = float(datos.get('valor_contaminante'))
-        fecha = datos.get('fecha')
         
         if not id_usuario:
             return jsonify({"success": False, "error": "Falta el ID de usuario"}), 400
@@ -133,9 +132,9 @@ def predict():
         query_insert = """
             INSERT INTO mediciones 
             (empresa, fecha, municipio, contaminante, tipo_area, tipo_estacion, valor_contaminante, resultados)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            VALUES (%s, NOW(), %s, %s, %s, %s, %s, %s)
         """
-        valores_insert = (nombre_empresa, fecha, municipio, contaminante, tipo_area, tipo_estacion, valor, resultado_str)
+        valores_insert = (nombre_empresa, municipio, contaminante, tipo_area, tipo_estacion, valor, resultado_str)
         
         cursor.execute(query_insert, valores_insert)
         conn.commit() 
