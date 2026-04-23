@@ -8,6 +8,7 @@ services:
       MYSQL_DATABASE: contaminantes
       MYSQL_USER: yak
       MYSQL_PASSWORD: proyectosdel26
+      TZ: Europe/Madrid
     ports:
       - "3306:3306"
     volumes:
@@ -27,6 +28,7 @@ services:
       - DB_USER=yak
       - DB_PASSWORD=proyectosdel26
       - DB_NAME=contaminantes
+      - TZ=Europe/Madrid
 
   web:
     build:
