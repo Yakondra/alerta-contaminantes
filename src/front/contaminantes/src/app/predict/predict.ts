@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-predict',
@@ -30,7 +31,11 @@ export class PredictComponent implements OnInit {
   errorMessage: string = '';
   cargandoOpciones: boolean = true;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  empresaActual: string = '';
+  mostrarModal: boolean = false;
+  grafanaUrlSegura!: SafeResourceUrl;
+
+  constructor(private http: HttpClient, private router: Router, private sanitizer: DomSanitizer) {}
 
   ngOnInit() {
     this.idUsuario = localStorage.getItem('usuario_logeado');
@@ -38,6 +43,12 @@ export class PredictComponent implements OnInit {
       this.router.navigate(['/login']);
       return;
     }
+
+    this.empresaActual = localStorage.getItem('empresa_logeada') || '';
+    const baseUrl = 'http://localhost:3000/d/adkn27k/historico-mediciones?orgId=1&panelId=1&kiosk';
+    const urlConFiltro = `${baseUrl}&var-empresa=${encodeURIComponent(this.empresaActual)}`;
+    this.grafanaUrlSegura = this.sanitizer.bypassSecurityTrustResourceUrl(urlConFiltro);
+
     this.cargarDiccionarios();
   }
 
@@ -102,4 +113,13 @@ export class PredictComponent implements OnInit {
     localStorage.removeItem('usuario_logueado');
     this.router.navigate(['/login']);
   }
+
+  abrirHistorico() {
+    this.mostrarModal = true;
+  }
+
+  cerrarHistorico() {
+    this.mostrarModal = false;
+  }
+
 }

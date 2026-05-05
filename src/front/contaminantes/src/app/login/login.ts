@@ -27,6 +27,7 @@ export class LoginComponent {
         next: (respuesta) => {
           if (respuesta.success) {
             localStorage.setItem('usuario_logeado', this.idUsuario);
+            localStorage.setItem('empresa_logeada', respuesta.empresa);
             this.router.navigate(['/predict']);
           }
         },
